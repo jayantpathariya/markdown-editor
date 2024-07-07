@@ -1,3 +1,4 @@
+import { cn } from "@/libs/utils";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
+      <body className={cn(font.className, "antialiased")}>{children}</body>
     </html>
   );
 }
