@@ -2,6 +2,7 @@
 
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
+import { data } from "@/db/data";
 import { cn } from "@/libs/utils";
 import { useState } from "react";
 
@@ -10,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Sidebar isOpen={isSidebarOpen} documents={data} />
       <div
         className={cn(
           "w-full min-h-screen",
@@ -24,6 +25,14 @@ export default function Home() {
           )}
         >
           <Header isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+          <main className="w-full h-full flex">
+            <div className="flex-1">
+              <div>
+                <h2>Markdown</h2>
+              </div>
+            </div>
+            <div className="flex-1">Markdown Preview</div>
+          </main>
         </div>
       </div>
     </>
