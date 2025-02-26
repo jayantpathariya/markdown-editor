@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto_Slab, Roboto_Mono } from "next/font/google";
+
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeSwitch } from "@/components/shared/theme-switch";
+
 import "./globals.css";
 
 const robotoSlab = Roboto_Slab({
@@ -23,11 +27,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${robotoSlab.variable} ${robotoMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <ThemeSwitch />
+        </ThemeProvider>
       </body>
     </html>
   );
