@@ -14,6 +14,10 @@
 }
 
 @theme {
+  --font-roboto: var(--font-roboto);
+  --font-roboto-slab: var(--font-roboto-slab);
+  --font-roboto-mono: var(--font-roboto-mono);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -26,6 +30,12 @@
   --color-neutral-700: #2b2d31;
   --color-neutral-800: #1d1f22;
   --color-neutral-900: #151619;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
 }
 
 @layer base {
@@ -35,5 +45,13 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
+  }
+
+  .heading-m {
+    @apply text-[15px] font-normal;
+  }
+
+  .body-m {
+    @apply text-[13px] font-light;
   }
 }

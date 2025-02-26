@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
-import { Roboto_Slab, Roboto_Mono } from "next/font/google";
+import { Roboto_Slab, Roboto_Mono, Roboto } from "next/font/google";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ThemeSwitch } from "@/components/shared/theme-switch";
 
 import "./globals.css";
 
+const roboto = Roboto({
+  weight: ["300", "400", "500"],
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 const robotoSlab = Roboto_Slab({
   variable: "--font-roboto-slab",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${robotoSlab.variable} ${robotoMono.variable} antialiased`}
+        className={`${robotoSlab.variable} ${robotoMono.variable} ${roboto.variable}  antialiased`}
       >
         <ThemeProvider
           attribute="class"
