@@ -3,7 +3,7 @@ import { Preview } from "./preview";
 
 export const Markdown = () => {
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <Editor />
       <Preview />
     </div>

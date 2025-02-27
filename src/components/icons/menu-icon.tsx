@@ -5,8 +5,8 @@ interface SvgIconProps {
 export const MenuIcon = ({ className }: SvgIconProps = {}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    // width="30"
-    // height="18"
+    width="30"
+    height="18"
     className={className}
   >
     <path

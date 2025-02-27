@@ -2,7 +2,7 @@ interface SvgIconProps {
   className?: string;
 }
 
-export const SaveIcon = ({ className }: SvgIconProps) => (
+export const Logo = ({ className }: SvgIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="130"

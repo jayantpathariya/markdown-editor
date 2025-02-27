@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #35393f;
@@ -49,6 +51,10 @@
 
   .heading-m {
     @apply text-[15px] font-normal;
+  }
+
+  .heading-s {
+    @apply text-sm font-medium tracking-[2px];
   }
 
   .body-m {
