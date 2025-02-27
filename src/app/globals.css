@@ -60,4 +60,8 @@
   .body-m {
     @apply text-[13px] font-light;
   }
+
+  .markdown {
+    @apply text-sm font-roboto-mono leading-6;
+  }
 }

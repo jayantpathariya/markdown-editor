@@ -19,7 +19,7 @@ export const Preview = () => {
         </p>
         <button
           onClick={() => setView("editor")}
-          className="hover:text-primary transition-colors duration-150 cursor-pointer md:hidden"
+          className="hover:text-primary transition-colors duration-150 cursor-pointer md:hidden text-neutral-400 dark:text-neutral-300"
         >
           <PreviewHideIcon />
         </button>
@@ -27,14 +27,14 @@ export const Preview = () => {
           {view === "editor" ? (
             <button
               onClick={() => setView("preview")}
-              className="hover:text-primary transition-colors duration-150 cursor-pointer"
+              className="hover:text-primary transition-colors duration-150 cursor-pointer text-neutral-400 dark:text-neutral-300"
             >
               <PreviewShowIcon />
             </button>
           ) : (
             <button
               onClick={() => setView("editor")}
-              className="hover:text-primary transition-colors duration-150 cursor-pointer"
+              className="hover:text-primary transition-colors duration-150 cursor-pointer text-neutral-400 dark:text-neutral-300"
             >
               <PreviewHideIcon />
             </button>
