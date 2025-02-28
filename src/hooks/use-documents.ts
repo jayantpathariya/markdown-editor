@@ -39,7 +39,6 @@ export const useDocuments = create<DocumentState>()(
           content: "",
           createdAt: new Date(),
         };
-
         set((state) => ({
           documents: [...state.documents, document],
         }));
@@ -60,10 +59,22 @@ export const useDocuments = create<DocumentState>()(
             d.id === id ? { ...d, title, content } : d,
           ),
         })),
-      deleteDocument: (id: string) =>
+
+      deleteDocument: (id: string) => {
+        const document = {
+          id: crypto.randomUUID(),
+          title: "untitled",
+          content: "",
+          createdAt: new Date(),
+        };
+        if (get().documents.length === 1) {
+          set({ documents: [document] });
+        }
+
         set((state) => ({
           documents: state.documents.filter((d) => d.id !== id),
-        })),
+        }));
+      },
     }),
     {
       name: "documents-storage",

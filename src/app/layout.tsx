@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto_Slab, Roboto_Mono, Roboto } from "next/font/google";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ThemeSwitch } from "@/components/shared/theme-switch";
 
 import "./globals.css";
 
@@ -47,7 +46,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <ThemeSwitch />
         </ThemeProvider>
       </body>
     </html>

@@ -26,7 +26,7 @@ export const Header = () => {
   const { isOpen, setIsOpen } = useMenu();
   const { setTitle, markdown } = useMarkdown();
   const [btnText, setBtnText] = useState("Save Changes");
-  const { updateDocument, deleteDocument, documents } = useDocuments();
+  const { updateDocument, deleteDocument, getDocuments } = useDocuments();
 
   const router = useRouter();
 
@@ -45,9 +45,9 @@ export const Header = () => {
     setIsDialogOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     deleteDocument(params.documentId);
-    router.push(documents[0].id);
+    router.push(getDocuments()[0].id);
   };
 
   return (
