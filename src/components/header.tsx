@@ -1,27 +1,40 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
+import { CloseIcon } from "@/components/icons/close-icon";
 import { DeleteIcon } from "@/components/icons/delete-icon";
 import { DocumentIcon } from "@/components/icons/document-icon";
+import { Logo } from "@/components/icons/logo";
 import { MenuIcon } from "@/components/icons/menu-icon";
 import { SaveIcon } from "@/components/icons/save-icon";
 
+import { useDocuments } from "@/hooks/use-documents";
+import { useMarkdown } from "@/hooks/use-markdown";
 import { useMenu } from "@/hooks/use-menu";
 
-import { CloseIcon } from "./icons/close-icon";
-import { Logo } from "./icons/logo";
-
 export const Header = () => {
-  const [documentName, setDocumentName] = useState("untitled.md");
+  const params = useParams<{
+    documentId: string;
+  }>();
   const [isEditing, setIsEditing] = useState(false);
   const { isOpen, setIsOpen } = useMenu();
+  const { setTitle, markdown } = useMarkdown();
+  const { updateDocument } = useDocuments();
+
+  const handleSave = () => {
+    updateDocument(params.documentId, {
+      title: markdown.title,
+      content: markdown.content,
+    });
+  };
 
   return (
     <header className="bg-neutral-700 flex items-center gap-x-3">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="size-13 bg-neutral-600 hover:bg-primary cursor-pointer transition-colors duration-150 grid place-items-center"
+        className="size-[72px] bg-neutral-600 hover:bg-primary cursor-pointer transition-colors duration-150 grid place-items-center"
       >
         {isOpen ? (
           <CloseIcon className="text-white" />
@@ -43,18 +56,18 @@ export const Header = () => {
             {isEditing ? (
               <input
                 type="text"
-                className={`heading-m text-white py-1 pr-2 outline-none border-b caret-primary`}
-                value={documentName}
-                onChange={(e) => setDocumentName(e.target.value)}
+                className={`heading-m text-white pr-2 outline-none border-b caret-primary`}
+                value={markdown.title}
+                onChange={(e) => setTitle(e.target.value)}
                 onBlur={() => setIsEditing(false)}
                 autoFocus
               />
             ) : (
               <span
-                className="heading-m text-white border-b border-transparent"
+                className="heading-m text-white border-b border-transparent pr-2"
                 onClick={() => setIsEditing(true)}
               >
-                {documentName}
+                {markdown.title}.md
               </span>
             )}
           </div>
@@ -63,7 +76,10 @@ export const Header = () => {
           <button className="text-neutral-400 hover:text-primary transition-colors duration-150 cursor-pointer">
             <DeleteIcon className="size-5" />
           </button>
-          <button className="bg-primary text-primary-foreground p-2.5 md:size-fit flex items-center justify-center gap-x-2 rounded-md md:px-4 md:py-2 hover:bg-primary-hover transition-colors duration-150 cursor-pointer">
+          <button
+            onClick={handleSave}
+            className="bg-primary text-primary-foreground p-2.5 md:size-fit flex items-center justify-center gap-x-2 rounded-md md:px-4 md:py-2 hover:bg-primary-hover transition-colors duration-150 cursor-pointer"
+          >
             <SaveIcon />
             <span className="heading-m hidden md:inline-block">
               Save Changes

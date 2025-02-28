@@ -2,11 +2,13 @@
 
 import { PreviewShowIcon } from "@/components/icons/preview-show-icon";
 
-import { documents } from "@/constant";
+import { useMarkdown } from "@/hooks/use-markdown";
 import { useView } from "@/hooks/use-view";
 import { cn } from "@/lib/utils";
 
 export const Editor = () => {
+  const { markdown, setContent } = useMarkdown();
+
   const { view, setView } = useView();
 
   return (
@@ -29,8 +31,9 @@ export const Editor = () => {
       </div>
 
       <textarea
-        defaultValue={documents[1].content}
-        className="bg-background p-4 w-full h-[calc(100%-6.1rem)] md:h-[calc(100%-6.5rem)] outline-none markdown resize-none text-neutral-600 dark:text-neutral-300"
+        value={markdown.content}
+        onChange={(e) => setContent(e.target.value)}
+        className="bg-background p-4 w-full h-[calc(100%-7rem)] outline-none markdown resize-none text-neutral-600 dark:text-neutral-300"
       />
     </div>
   );

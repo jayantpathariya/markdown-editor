@@ -1,12 +1,13 @@
 "use client";
 
-import { documents } from "@/constant";
+import { useDocuments } from "@/hooks/use-documents";
 import { useMenu } from "@/hooks/use-menu";
 import { cn } from "@/lib/utils";
 
 import { MenuItem } from "./menu-item";
 
 export const Menu = () => {
+  const { documents } = useDocuments();
   const { isOpen } = useMenu();
 
   return (
