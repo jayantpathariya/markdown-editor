@@ -7,16 +7,27 @@ import { DocumentIcon } from "@/components/icons/document-icon";
 import { MenuIcon } from "@/components/icons/menu-icon";
 import { SaveIcon } from "@/components/icons/save-icon";
 
+import { useMenu } from "@/hooks/use-menu";
+
+import { CloseIcon } from "./icons/close-icon";
 import { Logo } from "./icons/logo";
 
 export const Header = () => {
   const [documentName, setDocumentName] = useState("untitled.md");
   const [isEditing, setIsEditing] = useState(false);
+  const { isOpen, setIsOpen } = useMenu();
 
   return (
     <header className="bg-neutral-700 flex items-center gap-x-3">
-      <button className="py-4 px-3 bg-neutral-600 hover:bg-primary cursor-pointer transition-colors duration-150">
-        <MenuIcon className="text-white" />
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="size-13 bg-neutral-600 hover:bg-primary cursor-pointer transition-colors duration-150 grid place-items-center"
+      >
+        {isOpen ? (
+          <CloseIcon className="text-white" />
+        ) : (
+          <MenuIcon className="text-white" />
+        )}
       </button>
       <div className="mx-2 hidden lg:block text-white">
         <Logo />
