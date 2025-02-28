@@ -15,7 +15,7 @@ A feature-rich markdown editor built with Next.js, TypeScript, and Tailwind CSS.
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/yourusername/markdown-editor.git
+   git clone https://github.com/jayantpathariya/markdown-editor.git
    cd markdown-editor
    ```
 
