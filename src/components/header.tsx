@@ -14,11 +14,15 @@ import { useDocuments } from "@/hooks/use-documents";
 import { useMarkdown } from "@/hooks/use-markdown";
 import { useMenu } from "@/hooks/use-menu";
 
+import { DeleteDialog } from "./shared/delete-dialog";
+
 export const Header = () => {
   const params = useParams<{
     documentId: string;
   }>();
   const [isEditing, setIsEditing] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const { isOpen, setIsOpen } = useMenu();
   const { setTitle, markdown } = useMarkdown();
   const [btnText, setBtnText] = useState("Save Changes");
@@ -38,8 +42,12 @@ export const Header = () => {
   };
 
   const handleDelete = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
     deleteDocument(params.documentId);
-    router.push(documents?.[0].id);
+    router.push(documents[0].id);
   };
 
   return (
@@ -100,6 +108,11 @@ export const Header = () => {
           </button>
         </div>
       </div>
+      <DeleteDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        onDelete={handleConfirmDelete}
+      />
     </header>
   );
 };
