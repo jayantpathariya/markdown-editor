@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { Header } from "@/components/header";
@@ -18,19 +18,24 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const params = useParams<{
     documentId: string;
   }>();
+  const router = useRouter();
 
-  const { getDocument } = useDocuments();
+  const { getDocument, addDocument } = useDocuments();
   const { setMarkdown } = useMarkdown();
   const { isOpen } = useMenu();
 
   useEffect(() => {
     const document = getDocument(params.documentId);
+    console.log({ document });
     if (document) {
       if (params.documentId) {
         setMarkdown(document);
       }
+    } else {
+      const id = addDocument();
+      router.push(id);
     }
-  }, [getDocument, params.documentId, setMarkdown]);
+  }, [getDocument, params.documentId, setMarkdown, addDocument, router]);
 
   return (
     <div className="font-roboto bg-background h-screen overflow-hidden">

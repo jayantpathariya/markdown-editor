@@ -10,14 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     if (documents.length === 0) {
-      const id = crypto.randomUUID();
-
-      addDocument({
-        id,
-        createdAt: new Date(),
-        title: "untitled-document",
-        content: "",
-      });
+      const id = addDocument();
       redirect(id);
     } else {
       redirect(documents[0].id);

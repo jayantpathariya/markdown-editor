@@ -1,7 +1,5 @@
 import { create } from "zustand";
 
-import { documents as documentsData } from "@/constant";
-
 export type Document = {
   id: string;
   title: string;
@@ -12,7 +10,7 @@ export type Document = {
 type DocumentState = {
   documents: Document[];
   addDocuments: (documents: Document[]) => void;
-  addDocument: (document: Document) => void;
+  addDocument: () => string;
   getDocument: (id: string) => Document | undefined;
   getDocuments: () => Document[];
   updateDocument: (
@@ -29,10 +27,22 @@ type DocumentState = {
 };
 
 export const useDocuments = create<DocumentState>((set) => ({
-  documents: documentsData,
+  documents: [],
   addDocuments: (documents) => set({ documents }),
-  addDocument: (document) =>
-    set((state) => ({ documents: [...state.documents, document] })),
+  addDocument: () => {
+    const document = {
+      id: crypto.randomUUID(),
+      title: "untitled",
+      content: "",
+      createdAt: new Date(),
+    };
+
+    set((state) => ({
+      documents: [...state.documents, document],
+    }));
+
+    return document.id;
+  },
   getDocument: (id): Document | undefined => {
     const documents = useDocuments.getState().documents;
 

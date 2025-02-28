@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { useDocuments } from "@/hooks/use-documents";
 import { useMenu } from "@/hooks/use-menu";
 import { cn } from "@/lib/utils";
@@ -7,8 +9,15 @@ import { cn } from "@/lib/utils";
 import { MenuItem } from "./menu-item";
 
 export const Menu = () => {
-  const { documents } = useDocuments();
+  const { documents, addDocument } = useDocuments();
   const { isOpen } = useMenu();
+
+  const router = useRouter();
+
+  const handleAddDocument = () => {
+    const documentId = addDocument();
+    router.push(documentId);
+  };
 
   return (
     <div
@@ -18,7 +27,10 @@ export const Menu = () => {
       )}
     >
       <p className="heading-s uppercase text-neutral-400 mb-6">My Document</p>
-      <button className="bg-primary py-2 px-4 w-full rounded-md text-primary-foreground heading-m cursor-pointer hover:bg-primary-hover transition-colors duration-150 mb-4">
+      <button
+        onClick={handleAddDocument}
+        className="bg-primary py-2 px-4 w-full rounded-md text-primary-foreground heading-m cursor-pointer hover:bg-primary-hover transition-colors duration-150 mb-4"
+      >
         + New Document
       </button>
       <div className="flex flex-col gap-y-4">

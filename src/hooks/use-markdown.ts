@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+import { document } from "@/constant";
+
 import { Document } from "./use-documents";
 
 type MarkdownState = {
@@ -10,12 +12,7 @@ type MarkdownState = {
 };
 
 export const useMarkdown = create<MarkdownState>((set) => ({
-  markdown: {
-    id: crypto.randomUUID(),
-    title: "untitled-document",
-    content: "",
-    createdAt: new Date(),
-  },
+  markdown: document,
   setTitle: (title) =>
     set((state) => ({
       markdown: { ...state.markdown, title },
