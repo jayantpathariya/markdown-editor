@@ -45,7 +45,12 @@ export const Preview = () => {
         </div>
       </div>
       <div className="p-4 h-[calc(100%-6.1rem)] md:h-[calc(100%-6.5rem)] overflow-y-auto">
-        <div className={cn(view === "preview" && "max-w-2xl mx-auto")}>
+        <div
+          className={cn(
+            "prose dark:prose-invert font-roboto-slab prose-sm sm:prose-base prose-h5:font-bold prose-h6:font-bold",
+            view === "preview" && "max-w-2xl mx-auto",
+          )}
+        >
           <Markdown>{documents[1].content}</Markdown>
         </div>
       </div>
