@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { CloseIcon } from "@/components/icons/close-icon";
@@ -21,13 +21,25 @@ export const Header = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { isOpen, setIsOpen } = useMenu();
   const { setTitle, markdown } = useMarkdown();
-  const { updateDocument } = useDocuments();
+  const [btnText, setBtnText] = useState("Save Changes");
+  const { updateDocument, deleteDocument, documents } = useDocuments();
+
+  const router = useRouter();
 
   const handleSave = () => {
     updateDocument(params.documentId, {
       title: markdown.title,
       content: markdown.content,
     });
+    setBtnText("Changes Saved");
+    setTimeout(() => {
+      setBtnText("Save Changes");
+    }, 2000);
+  };
+
+  const handleDelete = () => {
+    deleteDocument(params.documentId);
+    router.push(documents?.[0].id);
   };
 
   return (
@@ -73,7 +85,10 @@ export const Header = () => {
           </div>
         </div>
         <div className="flex items-center gap-x-4 ">
-          <button className="text-neutral-400 hover:text-primary transition-colors duration-150 cursor-pointer">
+          <button
+            onClick={handleDelete}
+            className="text-neutral-400 hover:text-primary transition-colors duration-150 cursor-pointer"
+          >
             <DeleteIcon className="size-5" />
           </button>
           <button
@@ -81,9 +96,7 @@ export const Header = () => {
             className="bg-primary text-primary-foreground p-2.5 md:size-fit flex items-center justify-center gap-x-2 rounded-md md:px-4 md:py-2 hover:bg-primary-hover transition-colors duration-150 cursor-pointer"
           >
             <SaveIcon />
-            <span className="heading-m hidden md:inline-block">
-              Save Changes
-            </span>
+            <span className="heading-m hidden md:inline-block">{btnText}</span>
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type Document = {
   id: string;
@@ -23,42 +24,50 @@ type DocumentState = {
       content: string;
     },
   ) => void;
-  deleteDocument: (document: Document) => void;
+  deleteDocument: (id: string) => void;
 };
 
-export const useDocuments = create<DocumentState>((set) => ({
-  documents: [],
-  addDocuments: (documents) => set({ documents }),
-  addDocument: () => {
-    const document = {
-      id: crypto.randomUUID(),
-      title: "untitled",
-      content: "",
-      createdAt: new Date(),
-    };
+export const useDocuments = create<DocumentState>()(
+  persist(
+    (set, get) => ({
+      documents: [],
+      addDocuments: (documents) => set({ documents }),
+      addDocument: () => {
+        const document = {
+          id: crypto.randomUUID(),
+          title: "untitled",
+          content: "",
+          createdAt: new Date(),
+        };
 
-    set((state) => ({
-      documents: [...state.documents, document],
-    }));
+        set((state) => ({
+          documents: [...state.documents, document],
+        }));
 
-    return document.id;
-  },
-  getDocument: (id): Document | undefined => {
-    const documents = useDocuments.getState().documents;
+        return document.id;
+      },
+      getDocument: (id): Document | undefined => {
+        const documents = get().documents;
 
-    const document = documents.find((d) => d.id === id);
+        const document = documents.find((d) => d.id === id);
 
-    return document;
-  },
-  getDocuments: (): Document[] => useDocuments.getState().documents,
-  updateDocument: (id, { title, content }) =>
-    set((state) => ({
-      documents: state.documents.map((d) =>
-        d.id === id ? { ...d, title, content } : d,
-      ),
-    })),
-  deleteDocument: (document) =>
-    set((state) => ({
-      documents: state.documents.filter((d) => d.id !== document.id),
-    })),
-}));
+        return document;
+      },
+      getDocuments: (): Document[] => useDocuments.getState().documents,
+      updateDocument: (id, { title, content }) =>
+        set((state) => ({
+          documents: state.documents.map((d) =>
+            d.id === id ? { ...d, title, content } : d,
+          ),
+        })),
+      deleteDocument: (id: string) =>
+        set((state) => ({
+          documents: state.documents.filter((d) => d.id !== id),
+        })),
+    }),
+    {
+      name: "documents-storage",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);

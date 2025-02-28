@@ -26,7 +26,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   useEffect(() => {
     const document = getDocument(params.documentId);
-    console.log({ document });
     if (document) {
       if (params.documentId) {
         setMarkdown(document);
